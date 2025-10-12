@@ -83,9 +83,9 @@ export default function SignUp() {
       >
         <div>
           <label htmlFor="name">Name</label>
+          <Input 
             type="text" 
             id="name"
-          <Input 
             {...register("name")}
             className="focus-visible:ring-1 focus-visible:ring-offset-0"
           />
