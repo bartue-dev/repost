@@ -1,13 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Home from "./components/pages/home";
-// import RequiredAuth from "./components/common/RequiredAuth";
-// import Welcome from "./components/pages/Welcome";
-// import PersistLogin from "./components/common/PersistLogin";
+import ProtectedRoute from "./components/common/protected-route";
 import SignUp from "./components/auth/sign-up";
 import SignIn from "./components/auth/sign-in";
 import Welcome from "./components/pages/welcome";
-import PublicRoute from "./components/common/publicRoute";
+import PublicRoute from "./components/common/public-route";
 
 export const router = createBrowserRouter([
   {
@@ -16,18 +14,13 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home/> },
       { path: "home", element: <Home/> },
-      { path: "welcome", element: <Welcome/>}
 
-      // {element: <PersistLogin/>,
-      //   children: [
-      //     {element: <RequiredAuth />,
-      //       children: [
-      //         {path: "welcome", element: <Welcome />}
-      //       ]
-      //     }
-      //   ]
-      // }
-      
+      {element: <ProtectedRoute />,
+        children: [
+          { index: true, element: <Welcome /> },
+          { path: "welcome", element: <Welcome /> }
+        ]
+      }  
     ]
   },
   { element: <PublicRoute/>,
