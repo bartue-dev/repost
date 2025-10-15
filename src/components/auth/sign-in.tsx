@@ -8,14 +8,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignInSchema } from "@/lib/zod-schema";
 import { useMutation } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
-import type { ApiErr } from "@/lib/types";
 import { LoaderCircle } from "lucide-react";
+import { useUserData } from "@/hooks/use-user-data";
+import type { ApiErr } from "@/lib/types";
 
 type SignInData = z.infer<typeof SignInSchema>
 
 export default function SignIn() {
   const [serverErr, setServerErr] = useState<{error?: string}>({});
   const navigate = useNavigate();
+  const {refetch} = useUserData();
 
   const {
     register,
@@ -33,19 +35,25 @@ export default function SignIn() {
       const response = await authClient.signIn.email({
         email: data.email,
         password: data.password
-      })
+      });
+
+      if (response.error) {
+        throw response.error;
+      }
 
       return response;
     },
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       console.log("Sign in", response)
 
-      navigate("/home")
+      refetch();
+      navigate("/welcome")
 
       reset();
     },
     onError: (error: ApiErr) => {
       console.error(error);
+      reset();
 
       /* serverErrors */
       const validateServer = {} as {error:string | undefined}
@@ -56,6 +64,9 @@ export default function SignIn() {
       } else if (error?.status === 400) {
         //if status is equal to 400
         validateServer.error = error?.response?.data?.message
+      } else if (error?.status === 401) {
+        //if status is equal to 400
+        validateServer.error = error?.message
       } else {
         //if none of the if statements but also failed
         validateServer.error = "Login failed"
@@ -108,7 +119,7 @@ export default function SignIn() {
           className="cursor-pointer bg-blue-500 border-none text-white hover:bg-blue-600 hover:text-white"
           disabled={isSubmitting}
         >
-          Sign up
+          Sign in
           {isSubmitting && <LoaderCircle className="animate-spin"/> }
         </Button>
       </form>
