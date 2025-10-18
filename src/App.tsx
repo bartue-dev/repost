@@ -4,14 +4,16 @@ import Navbar from "./components/common/navbar"
 function App() {
 
   return (
-   <div className="font-sofia-sans">
+   <div className="h-screen">
       {/* Navbar */}
       <div>
         <Navbar/>
       </div>
 
       {/* App child pages */}
-      <Outlet/>
+      <div className="p-5 ">
+        <Outlet/>
+      </div>
 
 
    </div>
