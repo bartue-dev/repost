@@ -6,11 +6,14 @@ import SignUp from "./components/auth/sign-up";
 import SignIn from "./components/auth/sign-in";
 import Welcome from "./components/pages/welcome";
 import PublicRoute from "./components/common/public-route";
+import NotFound from "./components/common/not-found";
+import CreatePost from "./components/pages/create-post";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
+    errorElement: <NotFound/>,
     children: [
       { index: true, element: <Home/> },
       { path: "home", element: <Home/> },
@@ -18,7 +21,8 @@ export const router = createBrowserRouter([
       {element: <ProtectedRoute />,
         children: [
           { index: true, element: <Welcome /> },
-          { path: "welcome", element: <Welcome /> }
+          { path: "welcome", element: <Welcome /> },
+          { path: "create-post", element: <CreatePost/> },
         ]
       }  
     ]
