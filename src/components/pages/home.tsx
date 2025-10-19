@@ -1,22 +1,48 @@
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import { Button } from "../ui/button"
 import { Textarea } from "../ui/textarea"
+import { useQuery } from "@tanstack/react-query"
+import { axiosInstance } from "../axios/axios"
+import type { PostsTypes } from "@/lib/types"
 import Posts from "../common/posts";
+
 
 export default function Home(){
   const [onFocus, setOnfocus] = useState(false);
+  const [isSort, setIsSort] = useState(false);
 
-  useEffect(() => {
-    console.log(onFocus)
-  },[onFocus])
+  const {
+    data: posts,
+    isLoading,
+    isError,
+    error
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () : Promise<PostsTypes[]> => {
+      const response = await axiosInstance.get("/v1/api/public-post");
+
+      return response?.data?.data.posts
+    }
+  });
+
+  //create displayPosts and use useMemo to be able to sort the query data
+  const displayPosts = useMemo(() => {
+    if (!isSort) return posts;
+
+    const sortPosts = posts?.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+
+    return sortPosts;
+  }, [isSort, posts]);
+
+  console.log("POSTS:", displayPosts)
 
   return (
-    <div className="grid grid-cols-[300px_1fr_300px] gap-5 py-4 px-10 font-roboto">
-      <div>
-        {/* <h1>Home</h1> */}
-      </div>
-
-      <div className="">
+    <div className="flex gap-5 py-4 px-10 font-roboto">
+    
+      <div className="flex-1">
+        <div className="bg-white p-2 rounded-md shodow-sm">
           <Textarea 
             name="content"
             placeholder="What's in your mind?"
@@ -37,20 +63,28 @@ export default function Home(){
                 </span>
               </div>
           }
+        </div>
+          
         <Button
           variant="outline"
-          className="mt-2 px-5 hover:bg-white hover:underline cursor-pointer"
+          className="mt-4 px-5 hover:bg-white hover:underline cursor-pointer"
+          onClick={() => setIsSort(prev => !prev)}
         >
           Latest
         </Button>
 
         {/* contents */}
         <div>
-          <Posts/>
+          <Posts
+            posts={displayPosts}
+            isLoading={isLoading}
+            isError={isError}
+            errorMessage={error?.message}
+          />
         </div>
       </div>
 
-      <div className="text-center">
+      <div className="text-center border w-100">
         <h1>Top discussions</h1>
       </div>
     </div>
