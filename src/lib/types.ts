@@ -7,3 +7,18 @@ export type ApiErr = {
     }
   }
 }
+
+export type PostsTypes = {
+  title: string,
+  content: string,
+  id: string,
+  userId: string,
+  createdAt: string,
+  user: {
+    name: string
+  },
+  reactions: {
+    type: string,
+    id: string
+  }[]
+}
