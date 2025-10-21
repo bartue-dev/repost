@@ -6,6 +6,7 @@ import type { PostsTypes } from "@/lib/types"
 
 type PostsPropsTypes = {
   posts: PostsTypes[] | undefined,
+  searchPost: string[],
   isLoading: boolean,
   isError: boolean,
   errorMessage: string | null | undefined,
@@ -20,12 +21,12 @@ const reactionList = [
 
 export default function Posts({
   posts, 
+  searchPost,
   isLoading, 
   isError, 
   errorMessage
 } : PostsPropsTypes) {
 
-  
   if (isLoading) {
     return (
       <div>
@@ -39,15 +40,22 @@ export default function Posts({
 
   if (isError) {
     return (
-      <div>
+      <div className="text-center text-sm text-red-600">
         {errorMessage || "Sorry an unexpected error occured"}
       </div>
     )
   }
 
   return (
-    <div className="grid grid-cols-2 gap-3 mt-5">
-      {posts?.map(post => {
+    <div className="grid grid-cols-1 gap-3 mt-5">
+      {
+      posts?.length === 0
+      ?
+        <div>
+          <p className="text-center italic">Sorry {searchPost.join(" ")} not found</p>
+        </div>
+      : 
+      posts?.map(post => {
         // const sanitizePosts = DOMPurify.sanitize(post.content);
         const formatedDate = format(new Date(post.createdAt), "MMM dd")
         const formatedTime = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })
@@ -72,7 +80,7 @@ export default function Posts({
             <h2 
               className="text-2xl break-words ml-10 font-montserrat font-bold text-gray-800 group-hover:text-blue-600"
             >
-              {post.title}
+              {post.title.substring(0, 50)}{post.title.length > 50 && "..."} 
             </h2>
 
             <div className="flex items-center gap-6 text-sm text-gray-800">
@@ -99,7 +107,15 @@ export default function Posts({
                   )
                 })}
               </div>
-              <span className="text-sm text-gray-700">{post.reactions.length} reactions</span>
+              {post.reactions.length > 0 
+                &&
+                <span 
+                  className="text-sm text-gray-700"
+                >
+                  {post.reactions.length} reactions
+                </span>
+              }
+                
             </div>
 
             {/* <div
