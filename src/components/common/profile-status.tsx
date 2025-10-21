@@ -89,7 +89,7 @@ export default function ProfileStatus() {
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
                   >
-                      Setting
+                      Settings
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
