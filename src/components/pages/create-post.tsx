@@ -57,7 +57,7 @@ export default function CreatePost() {
   }
 
   return (
-    <div className="max-w-3xl p-6 border rounded-xl">
+    <div className="max-w-3xl p-6 rounded-xl bg-white shadow-md">
       <h1 className="text-2xl font-semibold mb-4">Create New Post</h1>
 
       {serverErr && <p className="text-sm text-red-500 mb-4">{serverErr}</p>}
