@@ -4,7 +4,6 @@ import Home from "./components/pages/home";
 import ProtectedRoute from "./components/common/protected-route";
 import SignUp from "./components/auth/sign-up";
 import SignIn from "./components/auth/sign-in";
-import Welcome from "./components/pages/welcome";
 import PublicRoute from "./components/common/public-route";
 import NotFound from "./components/common/not-found";
 import CreatePost from "./components/pages/create-post";
@@ -20,8 +19,6 @@ export const router = createBrowserRouter([
 
       {element: <ProtectedRoute />,
         children: [
-          { index: true, element: <Welcome /> },
-          { path: "welcome", element: <Welcome /> },
           { path: "create-post", element: <CreatePost/> },
         ]
       }  
