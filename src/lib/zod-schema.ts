@@ -16,7 +16,7 @@ export const SignInSchema = z.object({
 
 //create post
 export const CreatePostSchema = z.object({
-  title: z.string().min(1, "Title must not be empty"),
+  title: z.string().trim().min(1, "Title must not be empty"),
   content: z.string()
     .refine(
       (val) => {
@@ -27,6 +27,8 @@ export const CreatePostSchema = z.object({
         return text.length > 0
       },
       { message: "Content cannot be empty" }
-    )
+    ),
+  tags: z.array(z.string()
+    , "Invalid tags").min(4, "Please add atleast four (4) tags")
 });
 
