@@ -28,7 +28,7 @@ export default function Home(){
     }
   });
 
-  console.log(posts)
+  console.log("Posts",posts)
 
   const onEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === "Enter") {
