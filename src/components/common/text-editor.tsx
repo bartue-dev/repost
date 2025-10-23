@@ -47,7 +47,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
 
   return (
     <div className="overflow-hidden shadow-xs">
-      <div ref={editorRef} className="min-h-[200px] bg-white" />
+      <div ref={editorRef} className="min-h-[250px] bg-white" />
     </div>
   )
 }
