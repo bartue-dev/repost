@@ -5,7 +5,7 @@ export default function PublicRoute() {
   const { session } = useUserData();
 
   if (session?.user) {
-    return <Navigate to="/welcome" replace/>
+    return <Navigate to="/home" replace/>
   }
 
   return <Outlet/>
