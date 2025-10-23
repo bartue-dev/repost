@@ -47,7 +47,7 @@ export default function SignIn() {
       console.log("Sign in", response)
 
       refetch();
-      navigate("/welcome")
+      navigate("/home")
 
       reset();
     },
