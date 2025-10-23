@@ -17,6 +17,7 @@ export type PostsTypes = {
   user: {
     name: string
   },
+  tags: string[],
   reactions: {
     type: string,
     id: string
