@@ -6,14 +6,12 @@ import type { PostsTypes } from "@/lib/types"
 import Posts from "../common/posts";
 
 import { Search } from "lucide-react"
-import { Input } from "../ui/input"
 
 export default function Home(){
   const [isSort, setIsSort] = useState(false);
   const [searchPost, setSearchPost] = useState<string[]>([])
 
-  console.log("searchPost:", searchPost)
-
+  //posts query
   const {
     data: posts,
     isLoading,
@@ -28,8 +26,7 @@ export default function Home(){
     }
   });
 
-  console.log("Posts",posts)
-
+  //Search for posts using enkey key event
   const onEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -41,25 +38,26 @@ export default function Home(){
       if (typeof search === "string") {
         searchPostsArr = search?.split(",").map(s => s.trim()).filter(s => !!s)
       }
-      console.log(searchPostsArr)
-
-      console.log("ENTER KEY")
-
+     
       setSearchPost(searchPostsArr)
     }
   }
 
-
-
   //create displayPosts and use useMemo to be able to sort the query data
   const displayPosts = useMemo(() => {
-    if (!isSort) return posts;
+    if (!isSort) {
+      const oldPosts = posts?.sort((a, b) => {
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      });
 
-    const sortPosts = posts?.sort((a, b) => {
+      return oldPosts
+    };
+
+    const latestPosts = posts?.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
 
-    return sortPosts;
+    return latestPosts;
   }, [isSort, posts]);
 
   return (
@@ -69,10 +67,10 @@ export default function Home(){
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            className="px-5 hover:bg-white hover:underline cursor-pointer"
+            className="px-5 hover:bg-white hover:underline cursor-pointer text-xl !py-5.5 font-sofia-sans"
             onClick={() => setIsSort(prev => !prev)}
           >
-            Latest
+            {isSort ? "Old" : "Latest"}
           </Button>
 
           <form 
@@ -83,11 +81,11 @@ export default function Home(){
               size={20}
               className="absolute left-2"
             />
-            <Input 
+            <input 
               type="text"
               name="search"
               placeholder="Search"
-              className="bg-white pl-10 focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:border-blue-500 focus-visible:shadow-none"
+              className="bg-white border-gray-200 text-xl py-2 w-full rounded-md pl-10 focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:outline-blue-500 focus-visible:shadow-none shadow-sm"
             />
           </form>
         </div>
