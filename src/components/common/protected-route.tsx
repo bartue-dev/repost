@@ -11,7 +11,10 @@ export default function ProtectedRoute() {
   if (isPending) {
     return (
       <div>
-        <LoaderCircle className="animate-spin m-auto mt-30"/>
+        <LoaderCircle
+          size={60} 
+          className="animate-spin mx-auto mt-10 text-gray-600"
+        />
       </div>
     )
   }
