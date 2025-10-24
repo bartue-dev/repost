@@ -21,5 +21,16 @@ export type PostsTypes = {
   reactions: {
     type: string,
     id: string
+  }[],
+  likedPost: {
+    userId: string
   }[]
+}
+
+export type PostsPropsTypes = {
+  posts: PostsTypes[] | undefined,
+  searchPost: string[],
+  isLoading: boolean,
+  isError: boolean,
+  errorMessage: string | null | undefined,
 }
