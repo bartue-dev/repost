@@ -24,6 +24,22 @@ export type PostsTypes = {
   }[],
   likedPost: {
     userId: string
+  }[],
+  comment: {
+    id: string,
+    comment: string,
+    createdAt: string,
+    userId: string,
+    user: {
+      name: string
+    }
+    childComment: {
+      id: string,
+      comment: string,
+      createdAt: string,
+      userId: string,
+      parentCommentId: string
+    }[]
   }[]
 }
 
