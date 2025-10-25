@@ -4,17 +4,10 @@ import { format, formatDistanceToNow } from "date-fns"
 import type { ApiErr, PostsPropsTypes } from "@/lib/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { axiosPrivate } from "../axios/axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useUserData } from "@/hooks/use-user-data"
+import { reactionList } from "@/lib/helper"
 // import DOMPurify from "dompurify"
-
-//list of reaction to be rendered
-const reactionList = [
-  {type: "LOVED", emoji: "❤️", zIndex: 50},
-  {type: "LIKED", emoji: "👍", zIndex: 40},
-  {type: "COOL", emoji: "😎", zIndex: 30},
-  {type: "APPLAUSE", emoji: "👏", zIndex: 20},
-]
 
 //Posts component
 export default function Posts({
@@ -118,10 +111,10 @@ export default function Posts({
             {/* profile information */}
             <div className="flex items-center justify-start gap-2">
               <div
-                  className="rounded-full w-12 h-12 bg-gray-100 flex items-center justify-center text-base font-bold"
-                > 
-                  {post.user.name?.charAt(0)} 
-                </div>
+                className="rounded-full w-12 h-12 bg-gray-100 flex items-center justify-center text-base font-bold font-roboto"
+              > 
+                {post.user.name?.charAt(0)} 
+              </div>
               <div>
                 <h1 className="text-sm text-gray-800 font-semibold font-sofia-sans">{post.user.name}</h1>
                 <div className="text-sm text-gray-800 font-sofia-sans">{formatedDate} ({formatedTime})</div>
@@ -131,11 +124,12 @@ export default function Posts({
             {/* content container */}
             <div className="flex flex-col justify-between gap-5">
               {/* title */}
-              <h2 
+              <Link
+                to={`/post/post-details/${post.id}`} 
                 className="text-2xl break-words ml-10 font-montserrat font-bold text-gray-800 hover:text-blue-600 cursor-pointer"
               >
                 {post.title.substring(0, 50)}{post.title.length > 50 && "..."} 
-              </h2>
+              </Link>
 
               {/* tags */}
               <div className="flex items-center gap-2 ml-10">
