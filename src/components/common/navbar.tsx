@@ -28,7 +28,7 @@ export default function Navbar() {
     <div className="bg-white font-sofia-sans">
       {/* render navbar dialog if page size is below 768 */}
       <div className="flex justify-between items-center border-b-1 py-3 px-8">
-        <div className="flex items-center justify-center gap-10">
+        <div className="flex items-center justify-center gap-10 outline-none border-none">
           <Link to="/home" className="text-2xl font-extrabold">REPOST</Link>
         </div>
 
