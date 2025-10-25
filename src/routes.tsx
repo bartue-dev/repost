@@ -7,6 +7,7 @@ import SignIn from "./components/auth/sign-in";
 import PublicRoute from "./components/common/public-route";
 import NotFound from "./components/common/not-found";
 import CreatePost from "./components/pages/create-post";
+import PostDetails from "./components/common/post-details";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       {element: <ProtectedRoute />,
         children: [
           { path: "create-post", element: <CreatePost/> },
+          { path: "post/post-details/:postId", element: <PostDetails/>}
         ]
       }  
     ]
