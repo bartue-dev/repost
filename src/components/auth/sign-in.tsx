@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { z } from "zod";
@@ -16,8 +16,10 @@ type SignInData = z.infer<typeof SignInSchema>
 
 export default function SignIn() {
   const [serverErr, setServerErr] = useState<{error?: string}>({});
-  const navigate = useNavigate();
   const {refetch} = useUserData();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname;
 
   const {
     register,
@@ -47,7 +49,7 @@ export default function SignIn() {
       console.log("Sign in", response)
 
       refetch();
-      navigate("/home")
+      navigate(from, {replace: true})
 
       reset();
     },
