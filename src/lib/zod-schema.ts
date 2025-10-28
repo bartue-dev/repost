@@ -32,3 +32,18 @@ export const CreatePostSchema = z.object({
     , "Invalid tags").min(4, "Please add atleast four (4) tags")
 });
 
+//create comment
+export const CreateCommentSchema = z.object({
+  comment: z.string()
+    .refine(
+      (val) => {
+        const text = val
+          .replace(/<[^>]+>/g, "") // remove HTML tags
+          .replace(/&nbsp;/g, "")  // remove HTML entities
+          .trim()
+        return text.length > 0
+      },
+      { message: "Comment must not be empty" }
+    )
+})
+
