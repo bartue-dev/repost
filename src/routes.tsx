@@ -17,11 +17,12 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home/> },
       { path: "home", element: <Home/> },
+      { path: "post/post-details/:postId", element: <PostDetails/>},
+
 
       {element: <ProtectedRoute />,
         children: [
           { path: "create-post", element: <CreatePost/> },
-          { path: "post/post-details/:postId", element: <PostDetails/>}
         ]
       }  
     ]
