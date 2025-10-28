@@ -145,7 +145,7 @@ export default function CreatePost() {
 
             </div>
 
-            {/* Control the quill text editor using RHF like a state */}
+            {/* Control the quill text editor using RHF*/}
             <Controller
               name="content"
               control={control}
