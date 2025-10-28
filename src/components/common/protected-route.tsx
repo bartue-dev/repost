@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import { LoaderCircle } from "lucide-react"
 import { useUserData } from "@/hooks/use-user-data";
 import { Navigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 export default function ProtectedRoute() {
   const {session, error, isPending} = useUserData();
   const user = session?.user;
+  const location = useLocation();
 
   if (isPending) {
     return (
@@ -20,7 +21,7 @@ export default function ProtectedRoute() {
   }
 
   if (error || !user) {
-    return <Navigate to="/sign-in" />
+    return <Navigate to="/sign-in" state={{ from: location}} replace/>
   }
 
   return <Outlet/>
