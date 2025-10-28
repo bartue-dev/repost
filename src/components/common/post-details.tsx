@@ -7,8 +7,9 @@ import { format, formatDistanceToNow } from "date-fns";
 import { HeartPlus, MessageCircle, Bookmark } from "lucide-react";
 import type { PostsTypes } from "@/lib/types";
 import DOMPurify from "dompurify"
+import Comments from "./comments";
 
-
+//Post Details Component
 export default function PostDetails() {
   const {postId} = useParams();
 
@@ -60,10 +61,11 @@ export default function PostDetails() {
 
   return(
     <div className="p-5 rounded-md flex">
+      {/* left icons */}
       <div className="px-15 pt-10 space-y-5 font-roboto">
         <div className="text-center">
           <HeartPlus className="text-gray-800 cursor-pointer"/>
-          <span className="text-gray-700 text-sm">{post?.tags.length}</span>
+          <span className="text-gray-700 text-sm">{post?.reactions.length}</span>
         </div>
         <div className="text-center">
           <MessageCircle className="text-gray-800 cursor-pointer"/>
@@ -82,7 +84,8 @@ export default function PostDetails() {
           </span>
         </div>
       </div>
-
+      
+      {/* post content details */}
       <div className="space-y-4 bg-white p-5 rounded-md max-w-250">
         <div className="flex items-center justify-start gap-2">
           <div className="rounded-full w-15 h-15 bg-gray-100 flex items-center justify-center text-2xl font-bold font-roboto">
@@ -136,36 +139,12 @@ export default function PostDetails() {
           />
         </div>
 
+        {/* separator */}
+        <hr/>
         {/* comments */}
-        <div>
-          {post?.comment.map(c => (
-            <div key={c.id}>
-              {/* parent comment */}
-              <div className="flex">
-                <div 
-                  className="rounded-full w-12 h-12 bg-gray-100 flex items-center justify-center text-xl font-bold font-roboto"
-                >
-                  {c.user.name.charAt(0)}
-                </div>
-                <div className="border w-full p-3 rounded-sm">
-                  <div className="flex gap-2">
-                    <div>{c.user.name}</div>
-                    <div>{format(new Date(c.createdAt), "MMM dd")}</div>
-                  </div>
-                  <div>{c.comment}</div>
-                </div>
-              </div>
-              {/* child comment */}
-              <div>
-                {c.childComment.map(cc => (
-                  <div key={cc.id}>
-                    <div>{cc.comment}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <Comments
+          post={post}
+        />
       </div>
       
     </div>
