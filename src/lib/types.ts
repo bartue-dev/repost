@@ -50,3 +50,7 @@ export type PostsPropsTypes = {
   isError: boolean,
   errorMessage: string | null | undefined,
 }
+
+export type CommentPropsType = {
+  post?: PostsTypes
+}
