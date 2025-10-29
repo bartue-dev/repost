@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Navbar from "./components/common/navbar"
 import { useLocation } from "react-router-dom"
+import ScrollToTop from "./components/common/scroll-to-top";
 
 function App() {
   const location = useLocation();
@@ -9,10 +10,11 @@ function App() {
 
   return (
    <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Navbar */}
+      {/* scroll to top when go to other page */}
+      <ScrollToTop/>
 
       {pathname !== "create-post"
-        &&
+        &&//Navbar
           <div>
             <Navbar/>
           </div>
