@@ -5,17 +5,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { axiosPrivate } from "../axios/axios";
 import { LoaderCircle } from "lucide-react";
 import { format } from "date-fns";
+import { z } from "zod";
 import { useLocation, useNavigate } from "react-router-dom";
+import type { ApiErr, CommentPropsType } from "@/lib/types";
 import CommentTextEditor from "./comment-text-editor";
 import DOMPurify  from "dompurify";
-import { z } from "zod";
-import type { ApiErr, CommentPropsType } from "@/lib/types";
 import CommentActions from "./comment-actions";
 
 type CommentData = z.infer<typeof CreateCommentSchema>;
 
 //Comment Component
-export default function Comments({post} : CommentPropsType ) {
+export default function Comments({post, setIsCommentAdded} : CommentPropsType ) {
   const queryClient = useQueryClient(); // useQueryClient is use for global invalidation
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,7 +43,8 @@ export default function Comments({post} : CommentPropsType ) {
       return response;
     },
     onSuccess: (response) => {
-      console.log("Add comment response",response)
+      console.log("Add comment response",response);
+      setIsCommentAdded(true)
       queryClient.invalidateQueries({queryKey: ["post", post?.id]});
       reset()
     },
@@ -128,11 +129,9 @@ export default function Comments({post} : CommentPropsType ) {
                     <div className="font-sofia-sans font-semibold">{c.user.name} &bull;</div>
                     <div className="font-sofia-sans text-gray-800">{format(new Date(c.createdAt), "MMM dd")}</div>
                   </div>
-                  <div 
-                    className="text-2xl font-arial font-light break-words"
-                  >
-                     <div
-                      className=""
+                  <div>
+                    <div
+                      className="ql-editor"
                       dangerouslySetInnerHTML={{__html: sanitizeComment}}
                     />
                   </div>
@@ -140,6 +139,8 @@ export default function Comments({post} : CommentPropsType ) {
                     <CommentActions
                       commentUserId={c.userId}
                       postUserId={post.userId}
+                      commentId={c.id}
+                      postId={post.id}
                     />
                   </div>
                 </div>                
@@ -153,25 +154,44 @@ export default function Comments({post} : CommentPropsType ) {
             </div>
             {/* child comment */}
             <div className="space-y-5 mt-5 ml-12">
-              {c.childComment.map(cc => (
-                <div key={cc.id}>
-                  {/* child comment */}
-                  <div className="flex gap-2">
-                    <div 
-                      className="rounded-full w-12 h-12 bg-gray-100 flex items-center justify-center text-xl font-bold font-roboto"
-                    >
-                      {c.user.name.charAt(0)}
-                    </div>
-                    <div className="border w-full p-3 rounded-sm space-y-2">
-                      <div className="flex gap-2">
-                        <div className="font-sofia-sans font-semibold">{c.user.name} &bull;</div>
-                        <div className="font-sofia-sans text-gray-800">{format(new Date(c.createdAt), "MMM dd")}</div>
+              {c.childComment.map(cc => {
+                
+              const sanitizeChildComment = DOMPurify.sanitize(cc.comment);
+
+
+                return (
+                  <div key={cc.id}>
+                    {/* child comment */}
+                    <div className="flex gap-2">
+                      <div 
+                        className="rounded-full w-12 h-12 bg-gray-100 flex items-center justify-center text-xl font-bold font-roboto"
+                      >
+                        {c.user.name.charAt(0)}
                       </div>
-                      <div className="text-2xl font-arial font-light">{c.comment}</div>
-                    </div>
-                  </div>  
-                </div>
-              ))}
+                      <div className="border w-full p-3 rounded-sm space-y-2">
+                        <div className="flex gap-2">
+                          <div 
+                            className="font-sofia-sans font-semibold"
+                          >
+                            {cc.user.name} &bull;
+                          </div>
+                          <div 
+                            className="font-sofia-sans text-gray-800"
+                          >
+                            {format(new Date(cc.createdAt), "MMM dd")}
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            className="ql-editor"
+                            dangerouslySetInnerHTML={{__html: sanitizeChildComment}}
+                          />
+                        </div>
+                      </div>
+                    </div>  
+                  </div>
+                )
+              })}
             </div>
           </div>
          )
