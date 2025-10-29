@@ -5,6 +5,7 @@ import { LoaderCircle } from "lucide-react";
 import { reactionList } from "@/lib/helper";
 import { format, formatDistanceToNow } from "date-fns";
 import { HeartPlus, MessageCircle, Bookmark } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
 import type { PostsTypes } from "@/lib/types";
 import DOMPurify from "dompurify"
 import Comments from "./comments";
@@ -12,6 +13,9 @@ import Comments from "./comments";
 //Post Details Component
 export default function PostDetails() {
   const {postId} = useParams();
+  const [isCommentAdded, setIsCommentAdded] = useState(false)
+  const isBottomRef = useRef<HTMLDivElement>(null)
+
 
   //get specific post
   const {
@@ -27,6 +31,13 @@ export default function PostDetails() {
       return response.data.data.post;
     }
   });
+
+  useEffect(() => {
+    if (isBottomRef.current && isCommentAdded) {
+      isBottomRef.current?.scrollIntoView({behavior: "smooth"})
+      setIsCommentAdded(false)
+    }
+  },[isCommentAdded])
 
   console.log("SPECIFIC POST:", post)
 
@@ -144,9 +155,11 @@ export default function PostDetails() {
         {/* comments */}
         <Comments
           post={post}
+          setIsCommentAdded={setIsCommentAdded}
         />
+      <div ref={isBottomRef} ></div> 
       </div>
-      
+
     </div>
   )
 }
