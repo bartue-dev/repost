@@ -39,6 +39,9 @@ export type PostsTypes = {
       createdAt: string,
       userId: string,
       parentCommentId: string
+      user: {
+        name: string
+      }
     }[]
   }[]
 }
@@ -52,5 +55,6 @@ export type PostsPropsTypes = {
 }
 
 export type CommentPropsType = {
-  post?: PostsTypes
+  post?: PostsTypes,
+  setIsCommentAdded: (value: boolean) => void
 }
