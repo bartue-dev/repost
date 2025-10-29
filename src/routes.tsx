@@ -8,6 +8,7 @@ import PublicRoute from "./components/common/public-route";
 import NotFound from "./components/common/not-found";
 import CreatePost from "./components/pages/create-post";
 import PostDetails from "./components/common/post-details";
+import EditComment from "./components/common/edit-comment";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       {element: <ProtectedRoute />,
         children: [
           { path: "create-post", element: <CreatePost/> },
+          { path: "edit-comment/:id", element: <EditComment/> },
         ]
       }  
     ]
