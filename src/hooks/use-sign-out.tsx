@@ -9,12 +9,10 @@ export default function useSignOut() {
   const signOut = async () => {
 
     try {
-      const response = await authClient.signOut()
+      await authClient.signOut()
 
       refetch();
       navigate("/sign-in");
-
-      console.log("SIGN OUT:", response)
     } catch (error) {
       console.error(error)
     }
