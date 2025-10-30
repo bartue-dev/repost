@@ -7,6 +7,7 @@ import type { ApiErr, ChildCommentPropsType } from "@/lib/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosPrivate } from "../axios/axios";
 import { LoaderCircle } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type ChildCommentData = z.infer<typeof CreateCommentSchema>;
 
@@ -17,6 +18,8 @@ export default function ChildCommentForm({
   postId
 }: ChildCommentPropsType) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const {
     handleSubmit,
@@ -45,6 +48,9 @@ export default function ChildCommentForm({
     },
     onError: (error: ApiErr) => {
       console.error("Create child comment error:",error)
+      if (error?.status === 401) {
+        navigate("/sign-in", { state: { from: location }, replace: true })
+      }
     }
   });
 
