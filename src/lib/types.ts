@@ -58,3 +58,9 @@ export type CommentPropsType = {
   post?: PostsTypes,
   setIsCommentAdded: (value: boolean) => void
 }
+
+export type ChildCommentPropsType = {
+  commentId: string,
+  postId: string,
+  setIsReplyBtn: (value: number | undefined) => void
+}
