@@ -32,8 +32,6 @@ export default function EditComment() {
     }
   });
 
-  // console.log("COMMENT DETAILS:", commentDetails?.comment);
-
   const { 
     handleSubmit, 
     reset, 
@@ -64,8 +62,7 @@ export default function EditComment() {
 
       return response;
     },
-    onSuccess: (response) => {
-      console.log("Edit comment response:",response)
+    onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["commentDetails", id]});
       navigate(-1)
     },
