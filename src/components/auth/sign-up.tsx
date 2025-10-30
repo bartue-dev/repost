@@ -36,10 +36,8 @@ export default function SignUp() {
 
       return response
     },
-    onSuccess: (response) => {
-      console.log("Sign up:",response)
+    onSuccess: () => {
       setServerErr({})
-
     },
     onError: (error: ApiErr) => {
       reset()
