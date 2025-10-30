@@ -19,7 +19,7 @@ export default function SignIn() {
   const {refetch} = useUserData();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname;
+  const from = location.state?.from?.pathname || "/home";
 
   const {
     register,
@@ -45,13 +45,10 @@ export default function SignIn() {
 
       return response;
     },
-    onSuccess: async (response) => {
-      console.log("Sign in", response)
+    onSuccess: async () => {
 
       refetch();
       navigate(from, {replace: true})
-
-      reset();
     },
     onError: (error: ApiErr) => {
       console.error(error);
