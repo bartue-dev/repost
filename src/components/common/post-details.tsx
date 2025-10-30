@@ -39,8 +39,6 @@ export default function PostDetails() {
     }
   },[isCommentAdded])
 
-  console.log("SPECIFIC POST:", post)
-
   //post query loading
   if (isLoading) {
     return (
