@@ -61,6 +61,7 @@ export type CommentPropsType = {
 
 export type ChildCommentPropsType = {
   commentId: string,
+  commentAuthor: string,
   postId: string,
-  setIsReplyBtn: (value: number | undefined) => void
+  setIsReplyBtn: (value: string | undefined) => void
 }
