@@ -5,9 +5,10 @@ import "quill/dist/quill.snow.css";
 interface TextEditorProps {
   value: string;
   onChange: (value: string) => void;
+  commentAuthor: string
 }
 
-const ChildCommentTextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
+const ChildCommentTextEditor: React.FC<TextEditorProps> = ({ value, onChange, commentAuthor }) => {
   const editorContainerRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
   const toolbarRef = useRef<HTMLDivElement | null>(null);
@@ -23,13 +24,19 @@ const ChildCommentTextEditor: React.FC<TextEditorProps> = ({ value, onChange }) 
         },
       });
 
+      if (commentAuthor) {
+        const mentionText = `@${commentAuthor} `;
+        quillInstance.current.root.innerHTML = mentionText;
+        onChange(mentionText);
+      }
+
       // Listen for text changes
       quillInstance.current.on("text-change", () => {
         const html = editorRef.current?.querySelector(".ql-editor")?.innerHTML || "";
         onChange(html);
       });
     }
-  }, [onChange]);
+  }, [onChange, commentAuthor]);
 
   // Keep external value synced
   useEffect(() => {
