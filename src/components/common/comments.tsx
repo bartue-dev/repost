@@ -18,7 +18,7 @@ type CommentData = z.infer<typeof CreateCommentSchema>;
 
 //Comment Component
 export default function Comments({post, setIsCommentAdded} : CommentPropsType ) {
-  const [isReplyBtn, setIsReplyBtn] = useState<number | undefined>(undefined)
+  const [isReplyBtn, setIsReplyBtn] = useState<string | undefined>(undefined)
   const queryClient = useQueryClient(); // useQueryClient is use for global invalidation
   const navigate = useNavigate();
   const location = useLocation();
@@ -108,7 +108,7 @@ export default function Comments({post, setIsCommentAdded} : CommentPropsType ) 
       
       </div>
       <div className="space-y-5 mt-8">
-        {post?.comment.map((c, i) => {
+        {post?.comment.map(c => {
           
         const sanitizeComment = DOMPurify.sanitize(c.comment);
 
@@ -158,18 +158,19 @@ export default function Comments({post, setIsCommentAdded} : CommentPropsType ) 
               {/* Reply button */}
               <button
                 className="cursor-pointer text-gray-800 text-sm font-sofia-sans ml-14 hover:underline"
-                onClick={() => setIsReplyBtn(i)}
+                onClick={() => setIsReplyBtn(c.id)}
               >
                 Reply
               </button>
               {/* if isReplyBtn state is equal to i render ChildCommentForm */}
               {
-                isReplyBtn === i
+                isReplyBtn === c.id
                 &&
                   <div className="ml-20 mt-5">
                     <ChildCommentForm
                       setIsReplyBtn={setIsReplyBtn}
                       commentId={c.id}
+                      commentAuthor={c.user.name}
                       postId={post.id}
                     />
                   </div>
@@ -221,6 +222,26 @@ export default function Comments({post, setIsCommentAdded} : CommentPropsType ) 
                         </div>
                       </div>
                     </div>  
+
+                    <button
+                      className="cursor-pointer text-gray-800 text-sm font-sofia-sans ml-14 hover:underline"
+                      onClick={() => setIsReplyBtn(cc.id)}
+                    >
+                      Reply
+                    </button>
+                    {/* if isReplyBtn state is equal to i render ChildCommentForm */}
+                    {
+                      isReplyBtn === cc.id
+                      &&
+                        <div className="ml-20 mt-5">
+                          <ChildCommentForm
+                            setIsReplyBtn={setIsReplyBtn}
+                            commentId={c.id}
+                            commentAuthor={cc.user.name}
+                            postId={post.id}
+                          />
+                        </div>
+                    }
                   </div>
                 )
               })}
