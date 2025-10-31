@@ -15,12 +15,14 @@ type ChildCommentData = z.infer<typeof CreateCommentSchema>;
 export default function ChildCommentForm({
   setIsReplyBtn,
   commentId,
+  commentAuthor,
   postId
 }: ChildCommentPropsType) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
   
+  //zod & useForm
   const {
     handleSubmit,
     control,
@@ -33,6 +35,7 @@ export default function ChildCommentForm({
     }
   });
 
+  //addChildComment mutatuin query
   const {mutate: addChildComment} = useMutation({
     mutationFn: async (data: ChildCommentData) => {
       const response = await axiosPrivate.post(`/v1/api/comment/${commentId}/post/${postId}`, {
@@ -54,6 +57,7 @@ export default function ChildCommentForm({
     }
   });
 
+  //onSubmit function
   const onSubmit = (data: ChildCommentData) => {
     addChildComment(data)
   }
@@ -68,6 +72,7 @@ export default function ChildCommentForm({
             <ChildCommentTextEditor
               value={field.value}
               onChange={field.onChange}
+              commentAuthor={commentAuthor}
             />
           )}
         />
