@@ -61,7 +61,7 @@ export default function ProfileStatus() {
                 <div
                   className="rounded-full w-10 h-10 bg-blue-500 flex items-center justify-center text-white text-xl"
                 > 
-                  {user.name?.charAt(0)} 
+                  {user.name?.charAt(0).toUpperCase()} 
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mr-10 min-w-60 p-3">
