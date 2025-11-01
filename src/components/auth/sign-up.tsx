@@ -9,12 +9,18 @@ import { LoaderCircle } from "lucide-react";
 import type { ApiErr } from "../../lib/types";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserData } from "@/hooks/use-user-data";
 
 type SignUpData = z.infer<typeof SignUpSchema>
 
 export default function SignUp() {
   const [serverErr, setServerErr] = useState<{error?: string}>({})
+  const {refetch} = useUserData();
+  const navigate = useNavigate();
+
+
+  //zod & useForm
   const {
     register,
     handleSubmit,
@@ -24,6 +30,7 @@ export default function SignUp() {
     resolver: zodResolver(SignUpSchema)
   });
 
+  //signUp mutation query
   const {
     mutate: signUp
   } = useMutation({
@@ -38,6 +45,9 @@ export default function SignUp() {
     },
     onSuccess: () => {
       setServerErr({})
+      reset();
+      refetch();
+      navigate("/home")
     },
     onError: (error: ApiErr) => {
       reset()
@@ -67,6 +77,7 @@ export default function SignUp() {
     }
   })
 
+  //onSubmit function
   const onSubmit = async (data: SignUpData) => {
     signUp(data)
   }
