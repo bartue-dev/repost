@@ -10,6 +10,9 @@ import DOMPurify from "dompurify"
 import Comments from "../common/comments";
 import Reaction from "../common/reaction";
 import useAddReaction from "@/hooks/use-add-reaction";
+import { useUserData } from "@/hooks/use-user-data";
+import useSavedLikedPost from "@/hooks/use-save-liked-post";
+import useUndoLikedPost from "@/hooks/use-undo-liked-post";
 
 //Post Details Component
 export default function PostDetails() {
@@ -18,7 +21,11 @@ export default function PostDetails() {
   const [reactionEnter, setReactionEnter] = useState(false)
   const [isCommentAdded, setIsCommentAdded] = useState(false)
   const {postId} = useParams();
-  const addReaction = useAddReaction(postId)
+  const {session} = useUserData();
+  const currentUserId = session?.user.id;
+  const addReaction = useAddReaction(postId);
+  const savedLikedPost = useSavedLikedPost();
+  const undoLikedPost = useUndoLikedPost();
 
   //get specific post
   const {
@@ -34,6 +41,15 @@ export default function PostDetails() {
       return response.data.data.post;
     }
   });
+
+
+  const handleSaveLikedPost = () => {
+    savedLikedPost(post?.id)
+  }
+
+  const handleUndoLikedPost = () => {
+    undoLikedPost(post?.id)
+  }
 
   useEffect(() => {
     if (isBottomRef.current && isCommentAdded) {
@@ -130,7 +146,21 @@ export default function PostDetails() {
             </span>
         </div>
         <div className="text-center">
-          <Bookmark className="text-gray-800 cursor-pointer"/>
+          <Bookmark
+            fill={
+              post?.likedPost.find(user => user.userId === currentUserId) ? 
+              "black" : 
+              "none"
+            } 
+            onClick={() => {
+              if (post?.likedPost.find(post => post.userId === currentUserId)) {
+                handleUndoLikedPost()
+              } else {
+                handleSaveLikedPost()
+              }
+            }}
+            className="text-gray-800 cursor-pointer"
+          />
           <span className="text-gray-700 text-sm">
             {post?.likedPost.length}
           </span>
