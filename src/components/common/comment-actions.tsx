@@ -69,7 +69,10 @@ export default function CommentActions({
           ? // if comment author and post author is equal to current user
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <Link to={`/edit-comment/${commentId}/`} >
+              <Link 
+                to={`/edit-comment/${commentId}/`} 
+                className="w-full"
+              >
                 Edit
               </Link>
             </DropdownMenuItem>
