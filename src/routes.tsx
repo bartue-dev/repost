@@ -7,7 +7,7 @@ import SignIn from "./components/auth/sign-in";
 import PublicRoute from "./components/common/public-route";
 import NotFound from "./components/common/not-found";
 import CreatePost from "./components/pages/create-post";
-import PostDetails from "./components/common/post-details";
+import PostDetails from "./components/pages/post-details";
 import EditComment from "./components/common/edit-comment";
 
 export const router = createBrowserRouter([
