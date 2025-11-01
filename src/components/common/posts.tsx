@@ -1,12 +1,12 @@
 
 import { Bookmark, LoaderCircle } from "lucide-react"
 import { format, formatDistanceToNow } from "date-fns"
-import type { ApiErr, PostsPropsTypes } from "@/lib/types"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { axiosPrivate } from "../axios/axios"
-import { Link, useNavigate } from "react-router-dom"
+import type { PostsPropsTypes } from "@/lib/types"
+import { Link } from "react-router-dom"
 import { useUserData } from "@/hooks/use-user-data"
 import { reactionList } from "@/lib/helper"
+import useSavedLikedPost from "@/hooks/use-save-liked-post"
+import useUndoLikedPost from "@/hooks/use-undo-liked-post"
 // import DOMPurify from "dompurify"
 
 //Posts component
@@ -17,44 +17,12 @@ export default function Posts({
   isError, 
   errorMessage
 } : PostsPropsTypes) {
-  const navigate = useNavigate();
   const { session } = useUserData();
   const currentUserId = session?.user.id;
-  const queryClient = useQueryClient();
+  const savedLikedPost = useSavedLikedPost();
+  const undoLikedPost = useUndoLikedPost()
+  
 
-  //save liked post
-  const {mutate: savedLikedPost} = useMutation({
-    mutationFn: async (postId: string) => {
-      const response = await axiosPrivate.post(`/v1/api/liked-post/post/${postId}`);
-
-      return response;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["posts"]})
-    },
-    onError: (error: ApiErr) => {
-      if (error?.status === 401) {
-        navigate("/sign-in")
-      }
-    }
-  })
-
-  //undo save liked post
-  const {mutate: undoLikedPost} = useMutation({
-    mutationFn: async (postId: string) => {
-      const response = await axiosPrivate.delete(`/v1/api/liked-post/post/${postId}`);
-
-      return response;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ["posts"]})
-    },
-    onError: (error: ApiErr) => {
-      if (error?.status === 401) {
-        navigate("/sign-in")
-      }
-    }
-  })
 
   //if displayPost loading
   if (isLoading) {
