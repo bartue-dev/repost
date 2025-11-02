@@ -11,6 +11,7 @@ import PostDetails from "./components/pages/post-details";
 import EditComment from "./components/common/edit-comment";
 import Dashboard from "./components/pages/dashboard";
 import EditUserPost from "./components/common/edit-user-post";
+import SavedPost from "./components/pages/save-post";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
           { path: "edit-comment/:id", element: <EditComment/> },
           { path: "dashboard", element: <Dashboard/> },
           { path: "edit-user-post/:id", element: <EditUserPost/> },
-
+          { path: "saved-post", element: <SavedPost/> },
         ]
       }  
     ]
