@@ -74,12 +74,22 @@ export default function ProfileStatus() {
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
                   >
+                    <Link
+                      to="/dashboard"
+                      className="w-full"
+                    >
                       Dashboard
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
                   >
+                    <Link
+                      to="/create-post"
+                      className="w-full"
+                    >
                       Create Post
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
