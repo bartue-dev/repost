@@ -11,7 +11,7 @@ import PostDetails from "./components/pages/post-details";
 import EditComment from "./components/common/edit-comment";
 import Dashboard from "./components/pages/dashboard";
 import EditUserPost from "./components/common/edit-user-post";
-import SavedPost from "./components/pages/save-post";
+import SavedPost from "./components/pages/saved-post";
 
 export const router = createBrowserRouter([
   {
