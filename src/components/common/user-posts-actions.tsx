@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Ellipsis } from "lucide-react"
 import { axiosPrivate } from "../axios/axios"
 import type { ApiErr } from "@/lib/types";
+import { Link } from "react-router-dom";
 
 
 export default function UserPostActions(
@@ -54,7 +55,12 @@ export default function UserPostActions(
             className="mr-15"
           >
             <DropdownMenuItem>
-              Edit
+              <Link
+                to={`/edit-user-post/${postId}`}
+                className="w-full"
+              >
+                Edit
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleDeleteUserPost}
