@@ -66,7 +66,7 @@ export default function CommentActions({
         {
           commentUserId === user?.id ||
           postUserId === user?.id
-          ? // if comment author and post author is equal to current user
+          ? // if comment author or post author is equal to current user
           <DropdownMenuContent>
             <DropdownMenuItem>
               <Link 
