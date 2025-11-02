@@ -22,8 +22,6 @@ export default function Posts({
   const savedLikedPost = useSavedLikedPost();
   const undoLikedPost = useUndoLikedPost()
   
-
-
   //if displayPost loading
   if (isLoading) {
     return (
