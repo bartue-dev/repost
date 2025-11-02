@@ -36,7 +36,7 @@ export default function Home(){
       let searchPostsArr: string[] = [];
 
       if (typeof search === "string") {
-        searchPostsArr = search?.split(",").map(s => s.trim()).filter(s => !!s)
+        searchPostsArr = search?.split(" ").map(s => s.trim()).filter(s => !!s)
       }
      
       setSearchPost(searchPostsArr)
