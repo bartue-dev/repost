@@ -65,3 +65,16 @@ export type ChildCommentPropsType = {
   postId: string,
   setIsReplyBtn: (value: string | undefined) => void
 }
+
+export type UserPostDetailsType = {
+  title: string,
+  content: string,
+  id: string,
+  userId: string,
+  createdAt: string,
+  tags: string[],
+  reactions: {
+    type: string,
+    id: string
+  }[],
+}
