@@ -56,9 +56,6 @@ export default function Dashboard() {
     )
   }
 
-  console.log("USER POSTS:", userPosts);
-
-
   return (
     <div className="px-4">
       <h1 className="text-2xl font-semibold font-montserrat mb-5">DASHBOARD</h1>
