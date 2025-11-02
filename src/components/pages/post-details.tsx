@@ -168,7 +168,8 @@ export default function PostDetails() {
       </div>
       
       {/* post content details */}
-      <div className="space-y-4 bg-white p-5 rounded-md max-w-250">
+      <div className="space-y-4 bg-white p-5 rounded-md max-w-250 relative">
+        {/* author info */}
         <div className="flex items-center justify-start gap-2">
           <div className="rounded-full w-15 h-15 bg-gray-100 flex items-center justify-center text-2xl font-bold font-roboto">
             {post?.user.name.charAt(0)}
@@ -230,7 +231,9 @@ export default function PostDetails() {
             setIsCommentAdded={setIsCommentAdded}
           />
         </div>
-      <div ref={isBottomRef} ></div> 
+
+        {/* dummy div */}
+        <div ref={isBottomRef} ></div> 
       </div>
 
     </div>
