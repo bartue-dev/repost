@@ -78,3 +78,19 @@ export type UserPostDetailsType = {
     id: string
   }[],
 }
+
+export type SavedPostType = {
+  id: string,
+  likedAt: string,
+  post: {
+    title: string,
+    content: string,
+    id: string,
+    userId: string,
+    createdAt: string,
+    user: {
+      name: string
+    },
+    tags: string[],
+  }
+}
