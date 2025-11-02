@@ -94,7 +94,12 @@ export default function ProfileStatus() {
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
                   >
+                    <Link
+                      to="/saved-post"
+                      className="w-full"
+                    >
                       Saved Post
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
