@@ -125,7 +125,7 @@ export default function PostDetails() {
             {
               reactionEnter
               &&
-              <div className="absolute -top-3 left-10">
+              <div className="absolute -top-3 left-10 z-9999">
                 <Reaction
                   postId={postId}
                 />
