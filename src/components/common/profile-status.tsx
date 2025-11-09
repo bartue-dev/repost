@@ -58,11 +58,25 @@ export default function ProfileStatus() {
               <DropdownMenuTrigger
                 className="border-none outline-none cursor-pointer"
               >
-                <div
-                  className="rounded-full w-10 h-10 bg-blue-500 flex items-center justify-center text-white text-xl"
-                > 
-                  {user.name?.charAt(0).toUpperCase()} 
-                </div>
+                 <div className="px-2">
+                {
+                  user?.image ?
+                    <div
+                      className="block relative"
+                    >
+                      <img 
+                        src={user?.image} 
+                        alt="profile-image" 
+                        className="h-12 w-12 rounded-full object-cover"
+                      />
+                    </div> :
+                      <div
+                        className="rounded-full w-10 h-10 bg-blue-500 flex items-center justify-center text-white text-xl"
+                      >
+                        {user?.name.charAt(0).toUpperCase()}
+                      </div>
+                }
+              </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mr-10 min-w-60 p-3">
                 <DropdownMenuLabel className="flex flex-col items-start">
@@ -104,7 +118,12 @@ export default function ProfileStatus() {
                   <DropdownMenuItem 
                     className="text-base cursor-pointer" 
                   >
+                    <Link
+                      to="/settings"
+                      className="w-full"
+                    >
                       Settings
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
