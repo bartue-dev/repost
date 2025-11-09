@@ -12,6 +12,7 @@ import EditComment from "./components/common/edit-comment";
 import Dashboard from "./components/pages/dashboard";
 import EditUserPost from "./components/common/edit-user-post";
 import SavedPost from "./components/pages/saved-post";
+import Settings from "./components/pages/settings";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
           { path: "dashboard", element: <Dashboard/> },
           { path: "edit-user-post/:id", element: <EditUserPost/> },
           { path: "saved-post", element: <SavedPost/> },
+          { path: "settings", element: <Settings/> },
         ]
       }  
     ]
