@@ -86,7 +86,10 @@ export default function Dashboard() {
         <h1 className="font-semibold font-montserrat text-2xl mb-5">Posts</h1>
         {/* list of posts */}
         <div className="space-y-3">
-          {userPosts?.map(post => (
+          {
+          userPosts &&
+          userPosts?.length > 0 ?
+          userPosts?.map(post => (
             <div 
               key={post.id}
               className="bg-white p-4 rounded-md border relative pr-15"
@@ -107,7 +110,11 @@ export default function Dashboard() {
                 />
               </div>
             </div>
-          ))}
+          )) :
+          <div className="italic font-roboto bg-white p-4 rounded-md">
+            No post created yet
+          </div>
+          }
         </div>
       </div>
     </div>
